@@ -1,0 +1,34 @@
+#! /usr/bin/python2
+
+"""Broadcasts a periodic direction signal to the simulation and the signal processing program
+"""
+
+from time import sleep
+import socket
+import struct
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("period", help="The period of the simulated antenna rotation, in seconds")
+parser.add_argument("-p", "--phase", help="The phase, or starting angle, of the simulated antenna, in degrees")
+parser.add_argument("-r", "--resolution", help="The angular resolution at which new angles are sent, in degrees")
+args = parser.parse_args()
+
+period = float(args.period)
+phase = float(args.phase) if args.phase else 0
+resolution = float(args.resolution) if args.resolution else 5
+
+SIM_PORT = 12905
+DATAPROC_PORT = 14342
+
+sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+current_phase = phase
+
+while True:
+	if SIM_PORT:
+		sock_send.sendto(struct.pack("!f", current_phase), ("localhost", SIM_PORT))
+	if DATAPROC_PORT:
+		sock_send.sendto(struct.pack("!f", current_phase), ("localhost", DATAPROC_PORT))
+	sleep(period * resolution / 360.0)
+	current_phase = (current_phase + resolution) % 360.0
