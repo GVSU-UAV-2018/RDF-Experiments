@@ -26,9 +26,9 @@ sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 current_phase = phase
 
 while True:
-	if SIM_PORT:
-		sock_send.sendto(struct.pack("!f", current_phase), ("localhost", SIM_PORT))
-	if DATAPROC_PORT:
-		sock_send.sendto(struct.pack("!f", current_phase), ("localhost", DATAPROC_PORT))
-	sleep(period * resolution / 360.0)
-	current_phase = (current_phase + resolution) % 360.0
+    if SIM_PORT:
+        sock_send.sendto(struct.pack("!f", current_phase), ("localhost", SIM_PORT))
+    if DATAPROC_PORT:
+        sock_send.sendto(struct.pack("!f", current_phase), ("localhost", DATAPROC_PORT))
+    sleep(period * resolution / 360.0)
+    current_phase = (current_phase + resolution) % 360.0
