@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sat Apr  7 12:55:17 2018
+# Generated: Sat Apr  7 15:19:22 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -33,6 +33,7 @@ import math
 import scipy
 import sip
 import sys
+import udp_repeat_source
 from gnuradio import qtgui
 
 
@@ -107,6 +108,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self._SNR_range = Range(0, 100, 1, 50, 200)
         self._SNR_win = RangeWidget(self._SNR_range, self.set_SNR, "SNR", "counter_slider", float)
         self.top_layout.addWidget(self._SNR_win)
+        self.udp_repeat_source = udp_repeat_source.blk(udp_addr='localhost', udp_port=12905)
         self.qtgui_sink_x_1 = qtgui.sink_c(
         	1024, #fftsize
         	firdes.WIN_BLACKMAN_hARRIS, #wintype
@@ -180,7 +182,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.blocks_add_const_vxx_1 = blocks.add_const_vff((direction_1, ))
         self.blocks_add_const_vxx_0 = blocks.add_const_vff((direction_0, ))
-        self.analog_sig_source_x_1 = analog.sig_source_f(receiver_samp_rate, analog.GR_SAW_WAVE, 1.0/60, 180, 0)
         self.analog_sig_source_x_0_1 = analog.sig_source_c(receiver_samp_rate, analog.GR_COS_WAVE, freq_1 - tuner_freq, 1, 0)
         self.analog_sig_source_x_0 = analog.sig_source_c(receiver_samp_rate, analog.GR_COS_WAVE, freq_0 - tuner_freq, 1, 0)
         self.analog_noise_source_x_1 = analog.noise_source_c(analog.GR_UNIFORM, noise_correction_factor/2**n_adc_bits, 0)
@@ -197,8 +198,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.connect((self.analog_noise_source_x_1, 0), (self.blocks_add_xx_0, 3))
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.analog_sig_source_x_0_1, 0), (self.blocks_throttle_0_1, 0))
-        self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_const_vxx_0, 0))
-        self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_const_vxx_1, 0))
         self.connect((self.blocks_add_const_vxx_0, 0), (self.DirectionalAntenna, 0))
         self.connect((self.blocks_add_const_vxx_1, 0), (self.DirectionalAntenna_1, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.low_pass_filter_0, 0))
@@ -214,6 +213,8 @@ class top_block(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_vector_source_x_0_1, 0), (self.blocks_repeat_0_1, 0))
         self.connect((self.low_pass_filter_0, 0), (self.blocks_stream_to_vector_0, 0))
         self.connect((self.low_pass_filter_0, 0), (self.qtgui_sink_x_1, 0))
+        self.connect((self.udp_repeat_source, 0), (self.blocks_add_const_vxx_0, 0))
+        self.connect((self.udp_repeat_source, 0), (self.blocks_add_const_vxx_1, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "top_block")
@@ -298,7 +299,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_throttle_0.set_sample_rate(self.receiver_samp_rate)
         self.blocks_repeat_0_1.set_interpolation(self.receiver_samp_rate / self.pulse_samp_rate)
         self.blocks_repeat_0.set_interpolation(self.receiver_samp_rate / self.pulse_samp_rate)
-        self.analog_sig_source_x_1.set_sampling_freq(self.receiver_samp_rate)
         self.analog_sig_source_x_0_1.set_sampling_freq(self.receiver_samp_rate)
         self.analog_sig_source_x_0.set_sampling_freq(self.receiver_samp_rate)
 
