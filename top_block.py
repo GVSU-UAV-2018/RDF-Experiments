@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sat Apr  7 15:19:22 2018
+# Generated: Sat Apr  7 15:26:43 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -94,16 +94,16 @@ class top_block(gr.top_block, Qt.QWidget):
         self._tuner_freq_win = RangeWidget(self._tuner_freq_range, self.set_tuner_freq, "tuner_freq", "counter_slider", float)
         self.top_layout.addWidget(self._tuner_freq_win)
         self._freq_1_range = Range(148000000, 152000000, 100000, 150000000, 200)
-        self._freq_1_win = RangeWidget(self._freq_1_range, self.set_freq_1, 'Freq', "counter_slider", float)
+        self._freq_1_win = RangeWidget(self._freq_1_range, self.set_freq_1, 'Signal 1 Freq', "counter_slider", float)
         self.top_layout.addWidget(self._freq_1_win)
         self._freq_0_range = Range(148000000, 152000000, 100000, 150000000, 200)
-        self._freq_0_win = RangeWidget(self._freq_0_range, self.set_freq_0, 'Freq', "counter_slider", float)
+        self._freq_0_win = RangeWidget(self._freq_0_range, self.set_freq_0, 'Signal 0 Freq', "counter_slider", float)
         self.top_layout.addWidget(self._freq_0_win)
         self._direction_1_range = Range(0, 360, 1, 0, 1)
-        self._direction_1_win = RangeWidget(self._direction_1_range, self.set_direction_1, 'Direction', "counter_slider", float)
+        self._direction_1_win = RangeWidget(self._direction_1_range, self.set_direction_1, 'Signal 1 Direction', "counter_slider", float)
         self.top_layout.addWidget(self._direction_1_win)
         self._direction_0_range = Range(0, 360, 1, 0, 1)
-        self._direction_0_win = RangeWidget(self._direction_0_range, self.set_direction_0, 'Direction', "counter_slider", float)
+        self._direction_0_win = RangeWidget(self._direction_0_range, self.set_direction_0, 'Signal 0 Direction', "counter_slider", float)
         self.top_layout.addWidget(self._direction_0_win)
         self._SNR_range = Range(0, 100, 1, 50, 200)
         self._SNR_win = RangeWidget(self._SNR_range, self.set_SNR, "SNR", "counter_slider", float)
@@ -148,24 +148,24 @@ class top_block(gr.top_block, Qt.QWidget):
 
 
         self._pulse_period_1_tool_bar = Qt.QToolBar(self)
-        self._pulse_period_1_tool_bar.addWidget(Qt.QLabel('Pulse period (s)'+": "))
+        self._pulse_period_1_tool_bar.addWidget(Qt.QLabel('Signal 1 Period (s)'+": "))
         self._pulse_period_1_line_edit = Qt.QLineEdit(str(self.pulse_period_1))
         self._pulse_period_1_tool_bar.addWidget(self._pulse_period_1_line_edit)
         self._pulse_period_1_line_edit.returnPressed.connect(
         	lambda: self.set_pulse_period_1(eng_notation.str_to_num(str(self._pulse_period_1_line_edit.text().toAscii()))))
         self.top_layout.addWidget(self._pulse_period_1_tool_bar)
         self._pulse_period_0_tool_bar = Qt.QToolBar(self)
-        self._pulse_period_0_tool_bar.addWidget(Qt.QLabel('Pulse period (s)'+": "))
+        self._pulse_period_0_tool_bar.addWidget(Qt.QLabel('Signal 0 Period (s)'+": "))
         self._pulse_period_0_line_edit = Qt.QLineEdit(str(self.pulse_period_0))
         self._pulse_period_0_tool_bar.addWidget(self._pulse_period_0_line_edit)
         self._pulse_period_0_line_edit.returnPressed.connect(
         	lambda: self.set_pulse_period_0(eng_notation.str_to_num(str(self._pulse_period_0_line_edit.text().toAscii()))))
         self.top_layout.addWidget(self._pulse_period_0_tool_bar)
         self._pulse_duty_1_range = Range(0, 1, 0.001, 0.2, 200)
-        self._pulse_duty_1_win = RangeWidget(self._pulse_duty_1_range, self.set_pulse_duty_1, "pulse_duty_1", "counter_slider", float)
+        self._pulse_duty_1_win = RangeWidget(self._pulse_duty_1_range, self.set_pulse_duty_1, 'Signal 1 Duty', "counter_slider", float)
         self.top_layout.addWidget(self._pulse_duty_1_win)
         self._pulse_duty_0_range = Range(0, 1, 0.001, 0.2, 200)
-        self._pulse_duty_0_win = RangeWidget(self._pulse_duty_0_range, self.set_pulse_duty_0, "pulse_duty_0", "counter_slider", float)
+        self._pulse_duty_0_win = RangeWidget(self._pulse_duty_0_range, self.set_pulse_duty_0, 'Signal 0 Duty', "counter_slider", float)
         self.top_layout.addWidget(self._pulse_duty_0_win)
         self.low_pass_filter_0 = filter.fir_filter_ccf(network_decim, firdes.low_pass(
         	1, receiver_samp_rate, receiver_samp_rate / network_decim / 2, 1000, firdes.WIN_RECTANGULAR, 6.76))
