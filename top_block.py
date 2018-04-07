@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sat Apr  7 12:49:44 2018
+# Generated: Sat Apr  7 12:55:17 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -180,7 +180,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.blocks_add_const_vxx_1 = blocks.add_const_vff((direction_1, ))
         self.blocks_add_const_vxx_0 = blocks.add_const_vff((direction_0, ))
-        self.analog_sig_source_x_1 = analog.sig_source_f(receiver_samp_rate, analog.GR_SAW_WAVE, 0.1, 180, 0)
+        self.analog_sig_source_x_1 = analog.sig_source_f(receiver_samp_rate, analog.GR_SAW_WAVE, 1.0/60, 180, 0)
         self.analog_sig_source_x_0_1 = analog.sig_source_c(receiver_samp_rate, analog.GR_COS_WAVE, freq_1 - tuner_freq, 1, 0)
         self.analog_sig_source_x_0 = analog.sig_source_c(receiver_samp_rate, analog.GR_COS_WAVE, freq_0 - tuner_freq, 1, 0)
         self.analog_noise_source_x_1 = analog.noise_source_c(analog.GR_UNIFORM, noise_correction_factor/2**n_adc_bits, 0)

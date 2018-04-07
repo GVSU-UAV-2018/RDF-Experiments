@@ -856,7 +856,7 @@ Correct it so a signal with amplitude 1 is indistinguishable from noise.</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 76)</value>
+      <value>(8, 100)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1378,7 +1378,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>freq</key>
-      <value>0.1</value>
+      <value>1.0/60</value>
     </param>
     <param>
       <key>_coordinate</key>
