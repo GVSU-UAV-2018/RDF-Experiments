@@ -128,7 +128,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(624, 256)</value>
+      <value>(440, 256)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -171,7 +171,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(448, 256)</value>
+      <value>(656, 240)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -183,7 +183,7 @@
     </param>
     <param>
       <key>type</key>
-      <value>complex</value>
+      <value>float</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -346,11 +346,19 @@ class Pulse_Detect(gr.sync_block):
         noise_std = numpy.std(noise_arr[0:num_bins - 1])
         total_std = numpy.std(input_items[0][0:num_bins - 1])
         
+        SNR_db = 10 * math.log10(signal_mean / noise_mean)
         signal_confidence = total_std / noise_std
-            
-        print("Noise Std: ", noise_std)
-        print("Total Std: ", total_std)
-        print("Confidence: ", signal_confidence)
+        
+        if(SNR_db &gt; 3):
+            print("P")
+        else:
+            print("")
+        #print("Noise Mn: ", noise_mean)
+        #print("Signal Mn: ", signal_mean)
+        #print("Noise Std: ", noise_std)
+        #print("Total Std: ", total_std)
+        #print("SNR: ", SNR_db)
+        #print("Confidence: ", signal_confidence)
         
         sock_send = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock_send.sendto(struct.pack("!ffff", noise_mean, total_std, signal_mean, signal_confidence), ("localhost", RDF_INTERMEDIATE_PORT))
@@ -698,11 +706,11 @@ class Pulse_Detect(gr.sync_block):
     </param>
     <param>
       <key>ymax</key>
-      <value>10</value>
+      <value>100000</value>
     </param>
     <param>
       <key>ymin</key>
-      <value>-140</value>
+      <value>0</value>
     </param>
     <param>
       <key>y_axis_label</key>
@@ -715,19 +723,25 @@ class Pulse_Detect(gr.sync_block):
   </block>
   <connection>
     <source_block_id>blocks_complex_to_float_0</source_block_id>
-    <sink_block_id>epy_block_0</sink_block_id>
+    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_complex_to_float_0</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
+    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_multiply_xx_0</source_block_id>
+    <sink_block_id>epy_block_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_multiply_xx_0</source_block_id>
-    <sink_block_id>blocks_complex_to_float_0</sink_block_id>
+    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -739,14 +753,8 @@ class Pulse_Detect(gr.sync_block):
   </connection>
   <connection>
     <source_block_id>fft_vxx_0</source_block_id>
-    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
+    <sink_block_id>blocks_complex_to_float_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>fft_vxx_0</source_block_id>
-    <sink_block_id>blocks_multiply_xx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
   </connection>
 </flow_graph>
