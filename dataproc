@@ -10,29 +10,44 @@ sock_direction.setblocking(0)
 
 sock_rdf_samples = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock_rdf_samples.bind(("localhost", 12659))
+sock_rdf_samples.setblocking(0)
 
 last_known_direction = None
+
+samples = [[0, 0] for i in xrange(360)]
 
 with open("test_data.csv", "w") as data_file:
 
     data_recorder = csv.writer(data_file)
     data_recorder.writerow(
-        ["noise mean", "noise stdev", "signal mean", "P(signal)"])
+        ["direction", "noise mean", "noise stdev", "signal mean", "P(signal)"])
 
     while True:
         dir_pkt = None
-        rdf_sample = None
+        noise_mean = None
+        noise_std = None
+        signal_mean = None
+        signal_confidence = None
         try:
             dir_pkt, addr = sock_direction.recvfrom(1472)
         except socket.error:
             """Ignore this..."""
         else:
-            last_known_direction = struct.unpack("!f", dir_pkt)
+            last_known_direction = int(struct.unpack("!f", dir_pkt)[0]) % 360
 
         try:
-            rdf_sample_pkt = sock_rdf_samples.recvfrom(1472)
-            rdf_sample = struct.unpack("!ffff")
+            rdf_sample_pkt, addr = sock_rdf_samples.recvfrom(1472)
+            (noise_mean, noise_std, signal_mean, signal_confidence)\
+                = struct.unpack("!ffff", rdf_sample_pkt)
         except socket.error:
             """Ignore this..."""
         else:
-            data_recorder.writerow(rdf_sample)
+            print("Got data",
+                last_known_direction,
+                (noise_mean, noise_std, signal_mean, signal_confidence))
+            if last_known_direction is None:
+                print("Don't know direction yet")
+            else:
+                data_recorder.writerow((last_known_direction, noise_mean, noise_std, signal_mean, signal_confidence))
+                samples[last_known_direction][0] += 1
+                samples[last_known_direction][1] += signal_mean - noise_mean

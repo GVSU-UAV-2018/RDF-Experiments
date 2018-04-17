@@ -1413,7 +1413,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>const</key>
-      <value>direction_0</value>
+      <value>-direction_0</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1464,7 +1464,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>const</key>
-      <value>direction_1</value>
+      <value>-direction_1</value>
     </param>
     <param>
       <key>affinity</key>
@@ -2386,7 +2386,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     <key>qtgui_sink_x</key>
     <param>
       <key>bw</key>
-      <value>receiver_samp_rate / network_decim</value>
+      <value>receiver_samp_rate</value>
     </param>
     <param>
       <key>alias</key>
@@ -2418,7 +2418,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1808, 280)</value>
+      <value>(1648, 112)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -2430,7 +2430,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>id</key>
-      <value>qtgui_sink_x_1</value>
+      <value>qtgui_sink_x_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -2466,7 +2466,7 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     </param>
     <param>
       <key>showrf</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>type</key>
@@ -2624,6 +2624,12 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
     <sink_key>0</sink_key>
   </connection>
   <connection>
+    <source_block_id>blocks_add_xx_0</source_block_id>
+    <sink_block_id>qtgui_sink_x_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
     <source_block_id>blocks_complex_to_real_0</source_block_id>
     <sink_block_id>audio_sink_0</sink_block_id>
     <source_key>0</source_key>
@@ -2704,12 +2710,6 @@ class blk(gr.sync_block):  # other base classes are basic_block, decim_block, in
   <connection>
     <source_block_id>low_pass_filter_0</source_block_id>
     <sink_block_id>freq_xlating_fir_filter_xxx_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>low_pass_filter_0</source_block_id>
-    <sink_block_id>qtgui_sink_x_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
